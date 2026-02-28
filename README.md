@@ -8,7 +8,9 @@ Hosted at [90s-internet.com](https://90s-internet.com) via GitHub Pages.
 
 ## Join!
 
-We'd love to have you. [Open an issue](https://github.com/oatsandsugar/90s-internet/issues/new?title=Join%20the%20webring&labels=join&body=My%20site%3A%20%0A%0AA%20short%20description%3A%20%0A%0AI%20added%20the%20webring%20snippet%20to%20my%20site%3A%20yes%20%2F%20not%20yet) with:
+We'd love to have you. Don't have a site yet? Check out our [5 Minute Website guide](https://90s-internet.com/guide.html).
+
+[Open an issue](https://github.com/oatsandsugar/90s-internet/issues/new?title=Join%20the%20webring&labels=join&body=My%20site%3A%20%0A%0AA%20short%20description%3A%20%0A%0AI%20added%20the%20webring%20snippet%20to%20my%20site%3A%20yes%20%2F%20not%20yet) with:
 
 - Your site URL
 - A short description (e.g. "books for a baby", "honest brick reviews")
