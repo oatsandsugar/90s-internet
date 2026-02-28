@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+  <title>5 Minute Website — 90s Internet Webring</title>
+  <style>
+    body { font-family: monospace; }
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      padding: 0.5em;
+      border: 1px solid;
+      background: #1a1a1a;
+      color: #0f0;
+      overflow-x: auto;
+    }
+    @media (prefers-color-scheme: light) {
+      pre { background: #f0f0f0; color: #000; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>5 Minute Website</h1>
+  <p>A guide from the <a href="index.html">90s Internet Webring</a>.</p>
+  <p>You want to put something on the internet. Here's how, from zero to webring member, in six steps.</p>
+  <p>This is one simple way to do it — there are many others. You could use <a href="https://neocities.org">Neocities</a>, <a href="https://pages.cloudflare.com">Cloudflare Pages</a>, a VPS, a Raspberry Pi in your closet, whatever. We're describing the GitHub Pages path because it's free, fast, and the webring repo is already on GitHub. Use whatever works for you.</p>
+
+  <hr>
+
+  <h2>1. Write some HTML</h2>
+  <p>Create a file called <b>index.html</b> and put something in it. Here's a starter:</p>
+<pre>
+&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport"
+          content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;My Website&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello, world!&lt;/h1&gt;
+    &lt;p&gt;This is my website. There are many
+    like it, but this one is mine.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+  <p>Open it in your browser. You have a website. It just isn't on the internet yet.</p>
+  <p>Change the text. Add more stuff. Make it yours. You can always come back and edit it later.</p>
+
+  <hr>
+
+  <h2>2. Put it on GitHub</h2>
+  <p><a href="https://github.com">GitHub</a> is where we'll host your site for free. If you don't have an account, make one.</p>
+
+  <h3>Option A: The website (easy)</h3>
+  <ol>
+    <li>Go to <a href="https://github.com/new">github.com/new</a></li>
+    <li>Name your repo (e.g. "my-cool-site")</li>
+    <li>Make it Public</li>
+    <li>Click "Create repository"</li>
+    <li>Click "uploading an existing file"</li>
+    <li>Drag in your index.html</li>
+    <li>Click "Commit changes"</li>
+  </ol>
+
+  <h3>Option B: The command line</h3>
+  <p>If you have <a href="https://git-scm.com">git</a> installed:</p>
+<pre>
+mkdir my-cool-site
+cd my-cool-site
+git init
+git add index.html
+git commit -m "my first website"
+gh repo create my-cool-site --public
+git push -u origin main
+</pre>
+  <p>(You'll need the <a href="https://cli.github.com">GitHub CLI</a> for <code>gh repo create</code>, or you can create the repo on the website and use <code>git remote add origin &lt;url&gt;</code> instead.)</p>
+
+  <hr>
+
+  <h2>3. Turn on GitHub Pages</h2>
+  <p>This makes GitHub serve your site at <b>username.github.io/repo-name</b>.</p>
+  <ol>
+    <li>Go to your repo on GitHub</li>
+    <li>Click <b>Settings</b> (top menu)</li>
+    <li>Click <b>Pages</b> (left sidebar)</li>
+    <li>Under "Source", pick <b>Deploy from a branch</b></li>
+    <li>Select <b>main</b> branch, <b>/ (root)</b></li>
+    <li>Click <b>Save</b></li>
+  </ol>
+  <p>Wait a minute or two. Your site is now at <code>https://username.github.io/repo-name</code>.</p>
+  <p>If you named your repo <b>username.github.io</b>, it'll be at <code>https://username.github.io</code> with no path needed.</p>
+
+  <p>Or via the CLI:</p>
+<pre>
+gh api repos/USERNAME/REPO/pages \
+  -X POST -f source.branch=main \
+  -f source.path=/
+</pre>
+
+  <hr>
+
+  <h2>4. Buy a domain (optional)</h2>
+  <p>Your site already works at github.io. But a custom domain is fun.</p>
+  <p>Some domain registrars:</p>
+  <ul>
+    <li><a href="https://www.hover.com">Hover</a></li>
+    <li><a href="https://www.namecheap.com">Namecheap</a></li>
+    <li><a href="https://www.cloudflare.com/products/registrar/">Cloudflare Registrar</a> (sells domains at cost)</li>
+  </ul>
+  <p>A .com is about $10/year. Weird TLDs (.es, .pizza, .lol) can be cheaper or more expensive.</p>
+  <p>If you don't want a custom domain, skip to step 6.</p>
+
+  <hr>
+
+  <h2>5. Configure DNS</h2>
+  <p>Point your domain at GitHub Pages.</p>
+
+  <h3>A. Add a CNAME file to your repo</h3>
+  <p>Create a file called <b>CNAME</b> (no extension) in your repo root containing just your domain:</p>
+  <pre>mycoolsite.com</pre>
+
+  <h3>B. Set DNS records</h3>
+  <p>In your registrar's DNS settings, add:</p>
+  <p>For an <b>apex domain</b> (mycoolsite.com):</p>
+<pre>
+Type  Host  Value
+A     @     185.199.108.153
+A     @     185.199.109.153
+A     @     185.199.110.153
+A     @     185.199.111.153
+</pre>
+  <p>For a <b>subdomain</b> (www.mycoolsite.com):</p>
+<pre>
+Type   Host  Value
+CNAME  www   username.github.io
+</pre>
+  <p>Or both! Most people set up the apex domain with A records and add a CNAME for www too.</p>
+
+  <h3>C. Enable HTTPS</h3>
+  <p>Back in GitHub repo Settings &gt; Pages, check <b>"Enforce HTTPS"</b>. GitHub gives you a free SSL certificate.</p>
+  <p>DNS can take a few minutes to a few hours to propagate. Be patient.</p>
+
+  <hr>
+
+  <h2>6. Join the webring!</h2>
+  <p>You have a website on the internet. Now let's link it to other websites.</p>
+
+  <h3>A. Add the webring snippet</h3>
+  <p>Paste this anywhere on your site:</p>
+<pre>
+&lt;center&gt;
+  &lt;a href="https://90s-internet.com/#prev"&gt;&amp;lt;&amp;lt; prev&lt;/a&gt; |
+  &lt;b&gt;90s Internet Webring&lt;/b&gt; |
+  &lt;a href="https://90s-internet.com/#next"&gt;next &amp;gt;&amp;gt;&lt;/a&gt;
+  &lt;br&gt;
+  &lt;a href="https://90s-internet.com/#random"&gt;random&lt;/a&gt;
+  &amp;middot; &lt;a href="https://90s-internet.com"&gt;list&lt;/a&gt;
+  &amp;middot; &lt;a href="https://github.com/oatsandsugar/90s-internet/issues/new?title=Join%20the%20webring&amp;amp;labels=join"&gt;join&lt;/a&gt;
+&lt;/center&gt;
+</pre>
+
+  <h3>B. Open an issue</h3>
+  <p><a href="https://github.com/oatsandsugar/90s-internet/issues/new?title=Join%20the%20webring&amp;labels=join&amp;body=My%20site%3A%20%0A%0AA%20short%20description%3A%20%0A%0AI%20added%20the%20webring%20snippet%20to%20my%20site%3A%20yes%20%2F%20not%20yet">Click here to open a join issue.</a> Tell us:</p>
+  <ul>
+    <li>Your site URL</li>
+    <li>A short description</li>
+    <li>That you added the snippet</li>
+  </ul>
+  <p>We'll link you into the ring. Welcome to the 90s internet.</p>
+
+  <hr>
+
+  <p><small><a href="index.html">Back to the webring</a> &middot; <a href="https://github.com/oatsandsugar/90s-internet">Source</a></small></p>
+
+</body>
+</html>
