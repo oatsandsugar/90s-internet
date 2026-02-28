@@ -27,7 +27,7 @@
                         <font size="+2"><b>90S INTERNET WEBRING</b></font>
                         <br />
                         <small
-                            >est. 2026 · 1 member strong · built with
+                            >est. 2026 · <span id="member-count">1 member</span> strong · built with
                             &lt;TABLE&gt;s and love</small
                         >
                         <br /><br />
@@ -45,8 +45,8 @@
                         </p>
                         <p>
                             Not about literally using 1996 technology.<br />More
-                            about the feeling: personal sites, made<br />by
-                            hand, about things you love. Use whatever<br />HTML
+                            about the feeling: personal sites, made<br />with
+                            love, about things you love. Use whatever<br />HTML
                             you want.
                         </p>
                         <p>
@@ -67,14 +67,14 @@
                         <pre>
   <b>~ Ring Members ~</b>
 
-  &gt;&gt; <a href="https://readingstori.es">readingstori.es</a> -- books @oatsandsugar read to his baby
+  &gt;&gt; <a href="https://readingstori.es">readingstori.es</a> -- books for a baby, semantic HTML experiment
 </pre>
                         <center>
                             <a
-                                href="https://github.com/oatsandsugar/90s-internet/issues/new?title=Join%20the%20webring&amp;labels=join&amp;body=My%20site%3A%20%0A%0AI%20added%20the%20webring%20snippet%20to%20my%20site%3A%20yes%20%2F%20not%20yet"
+                                href="https://github.com/oatsandsugar/90s-internet/issues/new?title=Join%20the%20webring&amp;labels=join&amp;body=My%20site%3A%20%0A%0AA%20short%20description%3A%20%0A%0AI%20added%20the%20webring%20snippet%20to%20my%20site%3A%20yes%20%2F%20not%20yet"
                                 >[ Join this ring! ]</a
                             >
-                            · <a href="#">[ Random ]</a> <br /><br />
+                            · <a href="#random">[ Random ]</a> <br /><br />
                         </center>
                     </td>
                 </tr>
@@ -90,9 +90,11 @@
                         <pre>
   <b>~ How to join ~</b>
 
-  1. <a href="https://github.com/oatsandsugar/90s-internet/issues/new?title=Join%20the%20webring&amp;labels=join&amp;body=My%20site%3A%20%0A%0AI%20added%20the%20webring%20snippet%20to%20my%20site%3A%20yes%20%2F%20not%20yet">Open an issue</a> with your site URL
+  1. <a href="https://github.com/oatsandsugar/90s-internet/issues/new?title=Join%20the%20webring&amp;labels=join&amp;body=My%20site%3A%20%0A%0AA%20short%20description%3A%20%0A%0AI%20added%20the%20webring%20snippet%20to%20my%20site%3A%20yes%20%2F%20not%20yet">Open an issue</a> with your site URL
   2. Add the webring snippet to your site
   3. We link you into the ring
+
+  Curious how it works? <a href="https://github.com/oatsandsugar/90s-internet">Check out the repo.</a>
 </pre>
                     </td>
                 </tr>
@@ -115,8 +117,18 @@
     &amp;middot; &lt;a href="https://90s-internet.com"&gt;list&lt;/a&gt;
     &amp;middot; &lt;a href="https://github.com/oatsandsugar/90s-internet/issues/new?title=Join%20the%20webring&amp;amp;labels=join"&gt;join&lt;/a&gt;
   &lt;/center&gt;
-</pre
-                        >
+</pre>
+                        <p align="center"><small>It looks like this:</small></p>
+                        <center>
+                            <a href="https://90s-internet.com/#prev">&lt;&lt; prev</a> |
+                            <b>90s Internet Webring</b> |
+                            <a href="https://90s-internet.com/#next">next &gt;&gt;</a>
+                            <br>
+                            <a href="https://90s-internet.com/#random">random</a>
+                            &middot; <a href="https://90s-internet.com">list</a>
+                            &middot; <a href="https://github.com/oatsandsugar/90s-internet/issues/new?title=Join%20the%20webring&amp;labels=join">join</a>
+                        </center>
+                        <br>
                     </td>
                 </tr>
 
@@ -155,5 +167,30 @@
                 </tr>
             </table>
         </center>
+        <script>
+            var members = [
+                "https://readingstori.es"
+            ];
+            var n = members.length;
+            document.getElementById("member-count").textContent = n + (n === 1 ? " member" : " members");
+            var hash = location.hash.slice(1);
+            if (hash && members.length > 0) {
+                var referrer = document.referrer;
+                var current = -1;
+                for (var i = 0; i < members.length; i++) {
+                    if (referrer.indexOf(members[i]) !== -1) {
+                        current = i;
+                        break;
+                    }
+                }
+                if (hash === "random") {
+                    location.href = members[Math.floor(Math.random() * members.length)];
+                } else if (hash === "next") {
+                    location.href = members[(current + 1) % members.length];
+                } else if (hash === "prev") {
+                    location.href = members[(current - 1 + members.length) % members.length];
+                }
+            }
+        </script>
     </body>
 </html>
